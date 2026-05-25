@@ -10,12 +10,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
 
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
   <style>
     /* ── RESET & BASE ─────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black:      #000000;
+      --black:      #1a1a1a;
       --white:      #ffffff;
       --gray-50:    #f9fafb;
       --gray-100:   #f3f4f6;
@@ -27,13 +30,16 @@
       --gray-700:   #374151;
       --accent:     #c41e3a;
       --accent-lt:  #e53e3e;
+      --accent-dark: #8b1628;
+      --success:    #10b981;
+      --light-accent: #fef2f2;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
-      background: var(--white);
+      background: linear-gradient(135deg, var(--white) 0%, #f8f9fa 100%);
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color: var(--black);
       overflow-x: hidden;
@@ -43,91 +49,164 @@
     /* ── HERO HEADER ──────────────────────────────────────── */
     .hero {
       position: relative;
-      background: var(--white);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: var(--white);
       padding: 80px 24px 60px;
       text-align: center;
-      border-bottom: 1px solid var(--gray-100);
       overflow: hidden;
     }
 
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -5%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cross-icon-wrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      margin-bottom: 32px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
     .cross-icon {
-      display: inline-block;
-      font-size: 48px;
-      margin-bottom: 28px;
-      opacity: 0.9;
+      font-size: 52px;
+      color: var(--white);
     }
 
     .hero-tag {
       display: inline-block;
-      background: transparent;
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 0;
-      margin-bottom: 20px;
-      opacity: 0.85;
+      padding: 8px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      opacity: 0.95;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
     }
 
     .hero h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.4rem, 7vw, 3.6rem);
-      color: var(--black);
-      line-height: 1.15;
-      margin-bottom: 16px;
+      font-size: clamp(2.4rem, 7vw, 3.8rem);
+      color: var(--white);
+      line-height: 1.12;
+      margin-bottom: 20px;
       font-weight: 800;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
     }
 
-    .hero h1 span { color: var(--accent); }
+    .hero h1 span { 
+      background: linear-gradient(120deg, #ffe6ea, var(--white));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
     .hero p {
-      color: var(--gray-600);
+      color: rgba(255, 255, 255, 0.92);
       font-size: 16px;
       font-weight: 400;
       max-width: 520px;
       margin: 0 auto;
-      line-height: 1.7;
+      line-height: 1.8;
       letter-spacing: 0.3px;
     }
 
     /* ── CARD ─────────────────────────────────────────────── */
     .card-wrap {
       position: relative;
-      max-width: 620px;
+      max-width: 540px;
       margin: 0 auto;
       padding: 0 16px 80px;
     }
 
     .card {
       background: var(--white);
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 56px 48px;
-      margin-top: -1px;
+      margin-top: -40px;
       border: 1px solid var(--gray-100);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 40px rgba(196, 30, 58, 0.12);
+      position: relative;
+      z-index: 10;
     }
 
     @media (max-width: 480px) {
-      .card { padding: 36px 24px; }
+      .card { 
+        padding: 36px 24px;
+        margin-top: -30px;
+      }
       .hero { padding: 60px 24px 48px; }
     }
 
     /* ── SECTION DIVIDER ──────────────────────────────────── */
     .section-label {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 12px;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--gray-600);
-      margin-bottom: 28px;
-      margin-top: 40px;
-      opacity: 0.8;
+      color: var(--gray-700);
+      margin-bottom: 24px;
+      margin-top: 32px;
+      opacity: 0.9;
     }
 
     .section-label:first-child { margin-top: 0; }
+
+    .section-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-lt));
+      border-radius: 8px;
+      color: var(--white);
+      font-size: 14px;
+    }
 
     /* ── FORM FIELDS ──────────────────────────────────────── */
     .field { margin-bottom: 24px; }
@@ -135,34 +214,40 @@
     .field label {
       display: block;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--black);
       margin-bottom: 10px;
+      letter-spacing: 0.2px;
     }
 
-    .field label .req { color: var(--accent); }
+    .field label .req { 
+      color: var(--accent);
+      font-weight: 700;
+    }
 
     .field input,
     .field select,
     .field textarea {
       width: 100%;
       padding: 14px 16px;
-      border: 1px solid var(--gray-200);
-      border-radius: 8px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 10px;
       background: var(--gray-50);
       font-family: 'Inter', sans-serif;
       font-size: 15px;
       color: var(--black);
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
       outline: none;
       appearance: none;
       letter-spacing: 0.3px;
+      font-weight: 500;
     }
 
     .field input::placeholder,
     .field select::placeholder,
     .field textarea::placeholder {
       color: var(--gray-400);
+      font-weight: 400;
     }
 
     .field input:focus,
@@ -170,7 +255,8 @@
     .field textarea:focus {
       border-color: var(--accent);
       background: var(--white);
-      box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.08);
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+      transform: translateY(-1px);
     }
 
     .field input.error,
@@ -197,7 +283,7 @@
       color: #dc2626;
       margin-top: 6px;
       display: none;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     /* Amount field with prefix */
@@ -213,10 +299,11 @@
       align-items: center;
       justify-content: center;
       background: transparent;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
-      color: var(--gray-600);
+      color: var(--accent);
       pointer-events: none;
+      letter-spacing: 0.5px;
     }
 
     .amount-wrap input { padding-left: 68px; }
@@ -230,25 +317,26 @@
       display: flex;
       align-items: flex-start;
       gap: 14px;
-      background: var(--gray-50);
-      border: 1px solid var(--gray-200);
-      border-radius: 8px;
-      padding: 18px 18px;
+      background: linear-gradient(135deg, var(--light-accent), #fff5f7);
+      border: 1.5px solid rgba(196, 30, 58, 0.15);
+      border-radius: 12px;
+      padding: 20px 20px;
       cursor: pointer;
       margin-bottom: 24px;
       transition: all 0.2s ease;
     }
 
     .checkbox-field:hover {
-      border-color: var(--gray-300);
-      background: var(--gray-100);
+      border-color: var(--accent);
+      background: linear-gradient(135deg, rgba(196, 30, 58, 0.08), #fff8f9);
+      box-shadow: 0 4px 12px rgba(196, 30, 58, 0.08);
     }
 
     .checkbox-field input[type="checkbox"] {
       width: 20px;
       height: 20px;
       flex-shrink: 0;
-      margin-top: 1px;
+      margin-top: 2px;
       accent-color: var(--accent);
       cursor: pointer;
     }
@@ -256,7 +344,7 @@
     .checkbox-field .cb-text strong {
       display: block;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--black);
       margin-bottom: 4px;
     }
@@ -271,25 +359,41 @@
     .submit-btn {
       width: 100%;
       padding: 16px 24px;
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent-lt));
       color: var(--white);
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-family: 'Inter', sans-serif;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.3px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      transition: all 0.2s ease;
-      margin-top: 8px;
+      transition: all 0.25s ease;
+      margin-top: 12px;
+      box-shadow: 0 4px 15px rgba(196, 30, 58, 0.2);
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.15);
+      transition: left 0.3s ease;
+    }
+
+    .submit-btn:hover:not(:disabled)::before {
+      left: 100%;
     }
 
     .submit-btn:hover:not(:disabled) {
-      background: #a01830;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(196, 30, 58, 0.25);
+      background: linear-gradient(135deg, var(--accent-dark), #a01830);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(196, 30, 58, 0.3);
     }
 
     .submit-btn:active:not(:disabled) {
@@ -297,7 +401,7 @@
     }
 
     .submit-btn:disabled {
-      opacity: 0.65;
+      opacity: 0.6;
       cursor: not-allowed;
     }
 
@@ -306,27 +410,30 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      position: relative;
+      z-index: 1;
     }
 
     /* ── SUCCESS STATE ────────────────────────────────────── */
     .success-panel {
       display: none;
       text-align: center;
-      padding: 8px 0;
+      padding: 16px 0;
     }
 
     .success-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #fef2f2, #fecaca);
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(135deg, #d1fae5, #a7f3d0);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 40px;
+      font-size: 46px;
       margin: 0 auto 28px;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
       animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      color: var(--success);
     }
 
     @keyframes pop {
@@ -336,7 +443,7 @@
 
     .success-panel h2 {
       font-family: 'Syne', sans-serif;
-      font-size: 28px;
+      font-size: 32px;
       color: var(--black);
       margin-bottom: 12px;
       font-weight: 800;
@@ -346,32 +453,34 @@
     .success-panel p {
       color: var(--gray-600);
       font-size: 15px;
-      line-height: 1.7;
+      line-height: 1.8;
+      font-weight: 500;
     }
 
     .pledge-ref {
       display: inline-block;
-      background: var(--gray-100);
-      border: 1px solid var(--gray-200);
+      background: linear-gradient(135deg, var(--gray-50), var(--gray-100));
+      border: 1.5px solid var(--gray-300);
       color: var(--black);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
-      padding: 8px 20px;
-      border-radius: 24px;
-      margin: 20px auto;
-      letter-spacing: 0.04em;
+      padding: 10px 24px;
+      border-radius: 8px;
+      margin: 24px auto;
+      letter-spacing: 0.08em;
       font-family: 'Inter', monospace;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
     .another-btn {
-      margin-top: 24px;
-      background: var(--gray-50);
-      border: 1px solid var(--gray-200);
-      border-radius: 8px;
+      margin-top: 28px;
+      background: linear-gradient(135deg, var(--gray-100), var(--gray-50));
+      border: 1.5px solid var(--gray-300);
+      border-radius: 10px;
       padding: 12px 24px;
       font-family: 'Inter', sans-serif;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--black);
       cursor: pointer;
       transition: all 0.2s ease;
@@ -379,8 +488,9 @@
     }
 
     .another-btn:hover {
-      background: var(--gray-100);
-      border-color: var(--gray-300);
+      background: linear-gradient(135deg, var(--gray-200), var(--gray-100));
+      border-color: var(--gray-400);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
     .another-btn:active {
@@ -394,7 +504,7 @@
       color: var(--gray-500);
       padding-bottom: 48px;
       position: relative;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: 0.2px;
     }
 
@@ -415,19 +525,19 @@
     .quick-amounts {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
     .qa-btn {
-      padding: 10px 16px;
+      padding: 11px 18px;
       background: var(--gray-100);
-      border: 1px solid var(--gray-200);
-      border-radius: 8px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 9px;
       font-family: 'Inter', sans-serif;
       font-size: 14px;
-      font-weight: 500;
-      color: var(--black);
+      font-weight: 600;
+      color: var(--gray-700);
       cursor: pointer;
       transition: all 0.2s ease;
       letter-spacing: 0.3px;
@@ -436,12 +546,14 @@
     .qa-btn:hover {
       background: var(--gray-200);
       border-color: var(--gray-300);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
     .qa-btn.active {
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent-lt));
       color: var(--white);
       border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(196, 30, 58, 0.25);
     }
   </style>
 </head>
@@ -449,10 +561,14 @@
 
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <header class="hero">
-    <div class="cross-icon">✝</div>
-    <span class="hero-tag">Youth Harvest 2026</span>
-    <h1>Make Your <span>Pledge</span></h1>
-    <p>Support the future of our youth ministry. Every contribution, no matter the size, creates meaningful impact.</p>
+    <div class="hero-content">
+      <div class="cross-icon-wrapper">
+        <i class="fas fa-cross cross-icon"></i>
+      </div>
+      <span class="hero-tag">Youth Harvest 2026</span>
+      <h1>Make Your <span>Pledge</span></h1>
+      <p>Support the future of our youth ministry. Every contribution, no matter the size, creates meaningful impact.</p>
+    </div>
   </header>
 
   <!-- ── FORM CARD ─────────────────────────────────────────── -->
@@ -461,7 +577,9 @@
 
       <!-- SUCCESS STATE -->
       <div class="success-panel" id="successPanel">
-        <div class="success-icon">✓</div>
+        <div class="success-icon">
+          <i class="fas fa-check"></i>
+        </div>
         <h2>Thank You</h2>
         <p>Your pledge has been received and recorded successfully.</p>
         <div class="pledge-ref" id="pledgeRef">PLG-XXXXXXXX</div>
@@ -474,29 +592,34 @@
       <form id="pledgeForm" novalidate>
 
         <!-- Personal Info -->
-        <div class="section-label">Personal Information</div>
+        <div class="section-label">
+          <div class="section-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          Personal Information
+        </div>
 
         <div class="row">
           <div class="field">
-            <label>Full Name <span class="req">*</span></label>
+            <label><i class="fas fa-signature" style="color: var(--accent); margin-right: 6px;"></i>Full Name <span class="req">*</span></label>
             <input type="text" id="name" placeholder="Kofi Mensah" autocomplete="name" />
             <div class="field-error" id="nameErr">Please enter your full name.</div>
           </div>
           <div class="field">
-            <label>Phone Number <span class="req">*</span></label>
+            <label><i class="fas fa-phone" style="color: var(--accent); margin-right: 6px;"></i>Phone Number <span class="req">*</span></label>
             <input type="tel" id="phone" placeholder="024 000 0000" autocomplete="tel" />
             <div class="field-error" id="phoneErr">Enter a valid phone number.</div>
           </div>
         </div>
 
         <div class="field">
-          <label>Email Address</label>
+          <label><i class="fas fa-envelope" style="color: var(--accent); margin-right: 6px;"></i>Email Address</label>
           <input type="email" id="email" placeholder="you@example.com" autocomplete="email" />
           <div class="field-hint">Optional. A confirmation will be sent here if provided.</div>
         </div>
 
         <div class="field">
-          <label>Society / Group <span class="req">*</span></label>
+          <label><i class="fas fa-users" style="color: var(--accent); margin-right: 6px;"></i>Society / Group <span class="req">*</span></label>
           <select id="society">
             <option value="" disabled selected>Select your society or group</option>
             <optgroup label="Youth Groups">
@@ -521,7 +644,12 @@
         </div>
 
         <!-- Pledge Amount -->
-        <div class="section-label">Pledge Amount</div>
+        <div class="section-label">
+          <div class="section-icon">
+            <i class="fas fa-hand-holding-heart"></i>
+          </div>
+          Pledge Amount
+        </div>
 
         <div class="quick-amounts" id="quickAmounts">
           <button type="button" class="qa-btn" onclick="setAmount(50)">GHS 50</button>
@@ -532,7 +660,7 @@
         </div>
 
         <div class="field">
-          <label>Custom Amount (GHS) <span class="req">*</span></label>
+          <label><i class="fas fa-coins" style="color: var(--accent); margin-right: 6px;"></i>Custom Amount (GHS) <span class="req">*</span></label>
           <div class="amount-wrap">
             <div class="amount-prefix">GHS</div>
             <input type="number" id="amount" placeholder="Enter amount" min="1" step="0.01" />
@@ -543,18 +671,10 @@
         <label class="checkbox-field">
           <input type="checkbox" id="recurring" />
           <div class="cb-text">
-            <strong>Make it recurring</strong>
+            <strong><i class="fas fa-redo" style="margin-right: 8px; color: var(--accent);"></i>Make it recurring</strong>
             <span>Pledge this amount monthly or regularly</span>
           </div>
         </label>
-
-        <!-- Optional Message -->
-        <div class="section-label">Prayer Intention</div>
-
-        <div class="field">
-          <textarea id="message" placeholder="Share a prayer request or message of encouragement…"></textarea>
-          <div class="field-hint">Optional. This helps us pray specifically for your intentions.</div>
-        </div>
 
         <!-- Submit -->
         <button type="submit" class="submit-btn" id="submitBtn">
@@ -568,7 +688,7 @@
     </div>
 
     <div class="footer">
-      Good Shepherd Catholic Church, Tema Community 2 · Youth Harvest 2026
+      <i class="fas fa-church" style="margin-right: 6px; opacity: 0.7;"></i>Good Shepherd Catholic Church, Tema Community 2 · Youth Harvest 2026
     </div>
   </div>
 
@@ -645,7 +765,6 @@
         society:   document.getElementById('society').value,
         amount:    parseFloat(document.getElementById('amount').value),
         recurring: document.getElementById('recurring').checked,
-        message:   document.getElementById('message').value.trim(),
       };
 
       try {
@@ -672,7 +791,7 @@
       }
     });
 
-    // ── RESET ────────────────────────────────────────────────
+    // ── RESET ─────────────────���──────────────────────────────
     function resetForm() {
       document.getElementById('pledgeForm').reset();
       document.getElementById('pledgeForm').style.display  = '';
