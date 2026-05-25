@@ -8,335 +8,404 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
 
   <style>
     /* ── RESET & BASE ─────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:    #0f2744;
-      --blue:    #1a4a7a;
-      --gold:    #c89b2a;
-      --gold-lt: #f0d078;
-      --cream:   #fdf8ee;
-      --green:   #14532d;
-      --white:   #ffffff;
-      --gray:    #64748b;
-      --border:  #d1c9b8;
-      --error:   #dc2626;
-      --success: #16a34a;
+      --black:      #000000;
+      --white:      #ffffff;
+      --gray-50:    #f9fafb;
+      --gray-100:   #f3f4f6;
+      --gray-200:   #e5e7eb;
+      --gray-300:   #d1d5db;
+      --gray-400:   #9ca3af;
+      --gray-500:   #6b7280;
+      --gray-600:   #4b5563;
+      --gray-700:   #374151;
+      --accent:     #c41e3a;
+      --accent-lt:  #e53e3e;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
-      background: var(--navy);
-      font-family: 'DM Sans', sans-serif;
-      color: var(--navy);
+      background: var(--white);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--black);
       overflow-x: hidden;
-    }
-
-    /* ── GRAIN OVERLAY ────────────────────────────────────── */
-    body::before {
-      content: "";
-      position: fixed; inset: 0; z-index: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none; opacity: .4;
+      line-height: 1.6;
     }
 
     /* ── HERO HEADER ──────────────────────────────────────── */
     .hero {
-      position: relative; z-index: 1;
-      background: linear-gradient(160deg, #0f2744 0%, #1a4a7a 60%, #0f2744 100%);
-      padding: 56px 24px 40px;
+      position: relative;
+      background: var(--white);
+      padding: 80px 24px 60px;
       text-align: center;
-      border-bottom: 3px solid var(--gold);
+      border-bottom: 1px solid var(--gray-100);
       overflow: hidden;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,155,42,.18) 0%, transparent 70%);
-      pointer-events: none;
     }
 
     .cross-icon {
       display: inline-block;
-      font-size: 40px;
-      margin-bottom: 12px;
-      animation: float 4s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-8px); }
+      font-size: 48px;
+      margin-bottom: 28px;
+      opacity: 0.9;
     }
 
     .hero-tag {
       display: inline-block;
-      background: var(--gold);
-      color: var(--navy);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .12em;
+      background: transparent;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 4px 14px;
-      border-radius: 40px;
-      margin-bottom: 16px;
+      padding: 0;
+      margin-bottom: 20px;
+      opacity: 0.85;
     }
 
     .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 6vw, 3.2rem);
-      color: var(--white);
-      line-height: 1.1;
-      margin-bottom: 10px;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 7vw, 3.6rem);
+      color: var(--black);
+      line-height: 1.15;
+      margin-bottom: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
 
-    .hero h1 span { color: var(--gold-lt); }
+    .hero h1 span { color: var(--accent); }
 
     .hero p {
-      color: rgba(255,255,255,.72);
-      font-size: 15px;
-      font-weight: 300;
-      max-width: 480px;
+      color: var(--gray-600);
+      font-size: 16px;
+      font-weight: 400;
+      max-width: 520px;
       margin: 0 auto;
-      line-height: 1.6;
+      line-height: 1.7;
+      letter-spacing: 0.3px;
     }
 
     /* ── CARD ─────────────────────────────────────────────── */
     .card-wrap {
-      position: relative; z-index: 1;
-      max-width: 580px;
+      position: relative;
+      max-width: 620px;
       margin: 0 auto;
-      padding: 0 16px 60px;
+      padding: 0 16px 80px;
     }
 
     .card {
-      background: var(--cream);
-      border-radius: 20px;
-      padding: 40px 36px;
-      margin-top: -24px;
-      box-shadow:
-        0 4px 6px rgba(0,0,0,.06),
-        0 20px 60px rgba(0,0,0,.22),
-        0 0 0 1px rgba(200,155,42,.18);
+      background: var(--white);
+      border-radius: 16px;
+      padding: 56px 48px;
+      margin-top: -1px;
+      border: 1px solid var(--gray-100);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
 
     @media (max-width: 480px) {
-      .card { padding: 28px 20px; }
+      .card { padding: 36px 24px; }
+      .hero { padding: 60px 24px 48px; }
     }
 
     /* ── SECTION DIVIDER ──────────────────────────────────── */
     .section-label {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 11px; font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 20px; margin-top: 28px;
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      margin-bottom: 28px;
+      margin-top: 40px;
+      opacity: 0.8;
     }
 
-    .section-label::after {
-      content: ""; flex: 1; height: 1px; background: var(--border);
-    }
+    .section-label:first-child { margin-top: 0; }
 
     /* ── FORM FIELDS ──────────────────────────────────────── */
-    .field { margin-bottom: 18px; }
+    .field { margin-bottom: 24px; }
 
     .field label {
       display: block;
-      font-size: 13px; font-weight: 600;
-      color: var(--navy); margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--black);
+      margin-bottom: 10px;
     }
 
-    .field label .req { color: var(--error); margin-left: 2px; }
+    .field label .req { color: var(--accent); }
 
     .field input,
     .field select,
     .field textarea {
       width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      background: var(--white);
-      font-family: 'DM Sans', sans-serif;
+      padding: 14px 16px;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: var(--gray-50);
+      font-family: 'Inter', sans-serif;
       font-size: 15px;
-      color: var(--navy);
-      transition: border-color .2s, box-shadow .2s;
+      color: var(--black);
+      transition: all 0.2s ease;
       outline: none;
       appearance: none;
+      letter-spacing: 0.3px;
+    }
+
+    .field input::placeholder,
+    .field select::placeholder,
+    .field textarea::placeholder {
+      color: var(--gray-400);
     }
 
     .field input:focus,
     .field select:focus,
     .field textarea:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(26,74,122,.12);
+      border-color: var(--accent);
+      background: var(--white);
+      box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.08);
     }
 
     .field input.error,
-    .field select.error { border-color: var(--error); }
+    .field select.error { 
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.04);
+    }
 
-    .field textarea { resize: vertical; min-height: 88px; }
+    .field textarea { 
+      resize: vertical; 
+      min-height: 100px;
+      font-family: 'Inter', sans-serif;
+    }
 
     .field-hint {
-      font-size: 11px; color: var(--gray); margin-top: 4px;
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 6px;
+      font-weight: 400;
     }
 
     .field-error {
-      font-size: 12px; color: var(--error); margin-top: 4px; display: none;
+      font-size: 13px;
+      color: #dc2626;
+      margin-top: 6px;
+      display: none;
+      font-weight: 500;
     }
 
     /* Amount field with prefix */
     .amount-wrap { position: relative; }
 
     .amount-prefix {
-      position: absolute; left: 0; top: 0; bottom: 0;
-      width: 52px;
-      display: flex; align-items: center; justify-content: center;
-      background: #e2d9c5; border-radius: 10px 0 0 10px;
-      border-right: 1.5px solid var(--border);
-      font-weight: 700; font-size: 13px; color: var(--blue);
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--gray-600);
       pointer-events: none;
     }
 
-    .amount-wrap input { padding-left: 64px; }
+    .amount-wrap input { padding-left: 68px; }
 
     /* Row layout */
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     @media (max-width: 420px) { .row { grid-template-columns: 1fr; } }
 
     /* Checkbox */
     .checkbox-field {
-      display: flex; align-items: flex-start; gap: 12px;
-      background: #eef4ff;
-      border: 1.5px solid #bfd4f7;
-      border-radius: 10px;
-      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 18px 18px;
       cursor: pointer;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-field:hover {
+      border-color: var(--gray-300);
+      background: var(--gray-100);
     }
 
     .checkbox-field input[type="checkbox"] {
-      width: 18px; height: 18px;
-      flex-shrink: 0; margin-top: 1px;
-      accent-color: var(--blue);
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      accent-color: var(--accent);
       cursor: pointer;
     }
 
     .checkbox-field .cb-text strong {
-      display: block; font-size: 14px;
-      font-weight: 600; color: var(--navy);
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 4px;
     }
 
     .checkbox-field .cb-text span {
-      font-size: 12px; color: var(--gray);
+      font-size: 13px;
+      color: var(--gray-600);
+      font-weight: 400;
     }
 
     /* ── SUBMIT BUTTON ────────────────────────────────────── */
     .submit-btn {
       width: 100%;
       padding: 16px 24px;
-      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      background: var(--accent);
       color: var(--white);
       border: none;
-      border-radius: 12px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: .02em;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      transition: transform .15s, box-shadow .15s;
-      box-shadow: 0 4px 20px rgba(15,39,68,.35);
+      transition: all 0.2s ease;
+      margin-top: 8px;
     }
 
-    .submit-btn::before {
-      content: "";
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(200,155,42,.25) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity .2s;
+    .submit-btn:hover:not(:disabled) {
+      background: #a01830;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(196, 30, 58, 0.25);
     }
 
-    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(15,39,68,.45); }
-    .submit-btn:hover::before { opacity: 1; }
-    .submit-btn:active { transform: translateY(0); }
-    .submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .submit-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
 
-    .btn-content { display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .submit-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .btn-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
 
     /* ── SUCCESS STATE ────────────────────────────────────── */
     .success-panel {
       display: none;
       text-align: center;
-      padding: 16px 0 8px;
+      padding: 8px 0;
     }
 
     .success-icon {
-      width: 72px; height: 72px;
-      background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #fef2f2, #fecaca);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 32px;
-      margin: 0 auto 20px;
-      box-shadow: 0 0 0 10px rgba(22,163,74,.1);
-      animation: pop .4s cubic-bezier(.18,1.28,.5,1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin: 0 auto 28px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+      animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     @keyframes pop {
-      from { transform: scale(0); opacity: 0; }
-      to   { transform: scale(1); opacity: 1; }
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     .success-panel h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px; color: var(--green);
-      margin-bottom: 8px;
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      color: var(--black);
+      margin-bottom: 12px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
     }
 
-    .success-panel p { color: var(--gray); font-size: 14px; line-height: 1.6; }
+    .success-panel p {
+      color: var(--gray-600);
+      font-size: 15px;
+      line-height: 1.7;
+    }
 
     .pledge-ref {
       display: inline-block;
-      background: #f0fdf4; border: 1.5px solid #86efac;
-      color: var(--green); font-size: 13px; font-weight: 700;
-      padding: 6px 18px; border-radius: 40px;
-      margin: 14px auto;
-      letter-spacing: .04em;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      color: var(--black);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: 24px;
+      margin: 20px auto;
+      letter-spacing: 0.04em;
+      font-family: 'Inter', monospace;
     }
 
     .another-btn {
-      margin-top: 20px;
-      background: none; border: 1.5px solid var(--border);
-      border-radius: 10px; padding: 10px 24px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px; font-weight: 600;
-      color: var(--navy); cursor: pointer;
-      transition: background .15s;
+      margin-top: 24px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--black);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.3px;
     }
 
-    .another-btn:hover { background: #e2d9c5; }
+    .another-btn:hover {
+      background: var(--gray-100);
+      border-color: var(--gray-300);
+    }
+
+    .another-btn:active {
+      transform: scale(0.98);
+    }
 
     /* ── FOOTER ───────────────────────────────────────────── */
     .footer {
       text-align: center;
-      font-size: 12px;
-      color: rgba(255,255,255,.38);
-      padding-bottom: 32px;
-      position: relative; z-index: 1;
+      font-size: 13px;
+      color: var(--gray-500);
+      padding-bottom: 48px;
+      position: relative;
+      font-weight: 400;
+      letter-spacing: 0.2px;
     }
 
     /* ── SPINNER ──────────────────────────────────────────── */
     .spinner {
-      width: 18px; height: 18px;
-      border: 2px solid rgba(255,255,255,.4);
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-top-color: white;
       border-radius: 50%;
-      animation: spin .7s linear infinite;
+      animation: spin 0.7s linear infinite;
       display: none;
     }
 
@@ -344,25 +413,35 @@
 
     /* ── QUICK AMOUNTS ────────────────────────────────────── */
     .quick-amounts {
-      display: flex; flex-wrap: wrap; gap: 8px;
-      margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     .qa-btn {
-      padding: 6px 14px;
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 30px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px; font-weight: 600;
-      color: var(--navy);
+      padding: 10px 16px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--black);
       cursor: pointer;
-      transition: all .15s;
+      transition: all 0.2s ease;
+      letter-spacing: 0.3px;
     }
 
-    .qa-btn:hover,
+    .qa-btn:hover {
+      background: var(--gray-200);
+      border-color: var(--gray-300);
+    }
+
     .qa-btn.active {
-      background: var(--navy); color: var(--white); border-color: var(--navy);
+      background: var(--accent);
+      color: var(--white);
+      border-color: var(--accent);
     }
   </style>
 </head>
@@ -370,10 +449,10 @@
 
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <header class="hero">
-    <div class="cross-icon">✝</div><br/>
+    <div class="cross-icon">✝</div>
     <span class="hero-tag">Youth Harvest 2026</span>
     <h1>Make Your <span>Pledge</span></h1>
-    <p>Your generosity builds the future of our youth ministry. Every pledge, big or small, makes a difference.</p>
+    <p>Support the future of our youth ministry. Every contribution, no matter the size, creates meaningful impact.</p>
   </header>
 
   <!-- ── FORM CARD ─────────────────────────────────────────── -->
@@ -382,11 +461,11 @@
 
       <!-- SUCCESS STATE -->
       <div class="success-panel" id="successPanel">
-        <div class="success-icon">🙏</div>
-        <h2>God Bless You!</h2>
-        <p>Your pledge has been recorded. You will receive a confirmation shortly.</p>
+        <div class="success-icon">✓</div>
+        <h2>Thank You</h2>
+        <p>Your pledge has been received and recorded successfully.</p>
         <div class="pledge-ref" id="pledgeRef">PLG-XXXXXXXX</div>
-        <p style="font-size:12px;color:#94a3b8;">Keep this reference for your records.</p>
+        <p style="font-size:13px;color:var(--gray-500);margin-top:16px;">A confirmation will be sent shortly. Keep your reference number for your records.</p>
         <br/>
         <button class="another-btn" onclick="resetForm()">Make Another Pledge</button>
       </div>
@@ -400,7 +479,7 @@
         <div class="row">
           <div class="field">
             <label>Full Name <span class="req">*</span></label>
-            <input type="text" id="name" placeholder="e.g. Kofi Mensah" autocomplete="name" />
+            <input type="text" id="name" placeholder="Kofi Mensah" autocomplete="name" />
             <div class="field-error" id="nameErr">Please enter your full name.</div>
           </div>
           <div class="field">
@@ -411,15 +490,15 @@
         </div>
 
         <div class="field">
-          <label>Email Address <span style="font-weight:400;color:var(--gray)">(optional)</span></label>
+          <label>Email Address</label>
           <input type="email" id="email" placeholder="you@example.com" autocomplete="email" />
-          <div class="field-hint">A confirmation will be sent here if provided.</div>
+          <div class="field-hint">Optional. A confirmation will be sent here if provided.</div>
         </div>
 
         <div class="field">
           <label>Society / Group <span class="req">*</span></label>
           <select id="society">
-            <option value="" disabled selected>— Select your society or group —</option>
+            <option value="" disabled selected>Select your society or group</option>
             <optgroup label="Youth Groups">
               <option>Catholic Youth Organisation (CYO)</option>
               <option>Youth for Christ (YFC)</option>
@@ -464,22 +543,23 @@
         <label class="checkbox-field">
           <input type="checkbox" id="recurring" />
           <div class="cb-text">
-            <strong>Recurring Pledge</strong>
-            <span>I would like to pledge this amount monthly / regularly</span>
+            <strong>Make it recurring</strong>
+            <span>Pledge this amount monthly or regularly</span>
           </div>
         </label>
 
         <!-- Optional Message -->
-        <div class="section-label">Prayer Intention <span style="font-weight:400;font-size:11px;letter-spacing:0;text-transform:none;color:var(--gray)">(optional)</span></div>
+        <div class="section-label">Prayer Intention</div>
 
         <div class="field">
           <textarea id="message" placeholder="Share a prayer request or message of encouragement…"></textarea>
+          <div class="field-hint">Optional. This helps us pray specifically for your intentions.</div>
         </div>
 
         <!-- Submit -->
         <button type="submit" class="submit-btn" id="submitBtn">
           <div class="btn-content">
-            <span id="btnText">🌾 Submit My Pledge</span>
+            <span id="btnText">Submit My Pledge</span>
             <div class="spinner" id="spinner"></div>
           </div>
         </button>
@@ -487,8 +567,8 @@
       </form>
     </div>
 
-    <div class="footer" style="margin-top:24px;">
-      Good Shepherd Catholic Church, Tema Community 2 &nbsp;·&nbsp; Youth Harvest 2026
+    <div class="footer">
+      Good Shepherd Catholic Church, Tema Community 2 · Youth Harvest 2026
     </div>
   </div>
 
@@ -585,10 +665,10 @@
           throw new Error(data.error || 'Unknown error');
         }
       } catch(err) {
-        alert('⚠️ Something went wrong: ' + err.message + '\n\nPlease try again or contact us.');
+        alert('Something went wrong: ' + err.message + '\n\nPlease try again or contact us.');
         btn.disabled  = false;
         spinner.style.display = 'none';
-        btnText.textContent   = '🌾 Submit My Pledge';
+        btnText.textContent   = 'Submit My Pledge';
       }
     });
 
@@ -605,7 +685,7 @@
       const btnText = document.getElementById('btnText');
       btn.disabled  = false;
       spinner.style.display = 'none';
-      btnText.textContent   = '🌾 Submit My Pledge';
+      btnText.textContent   = 'Submit My Pledge';
     }
   </script>
 </body>
