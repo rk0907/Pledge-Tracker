@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Youth Harvest — Make Your Pledge</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET & BASE ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0f2744;
+      --blue:    #1a4a7a;
+      --gold:    #c89b2a;
+      --gold-lt: #f0d078;
+      --cream:   #fdf8ee;
+      --green:   #14532d;
+      --white:   #ffffff;
+      --gray:    #64748b;
+      --border:  #d1c9b8;
+      --error:   #dc2626;
+      --success: #16a34a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY ────────────────────────────────────── */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; opacity: .4;
+    }
+
+    /* ── HERO HEADER ──────────────────────────────────────── */
+    .hero {
+      position: relative; z-index: 1;
+      background: linear-gradient(160deg, #0f2744 0%, #1a4a7a 60%, #0f2744 100%);
+      padding: 56px 24px 40px;
+      text-align: center;
+      border-bottom: 3px solid var(--gold);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,155,42,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cross-icon {
+      display: inline-block;
+      font-size: 40px;
+      margin-bottom: 12px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 40px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 span { color: var(--gold-lt); }
+
+    .hero p {
+      color: rgba(255,255,255,.72);
+      font-size: 15px;
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── CARD ─────────────────────────────────────────────── */
+    .card-wrap {
+      position: relative; z-index: 1;
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 0 16px 60px;
+    }
+
+    .card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 40px 36px;
+      margin-top: -24px;
+      box-shadow:
+        0 4px 6px rgba(0,0,0,.06),
+        0 20px 60px rgba(0,0,0,.22),
+        0 0 0 1px rgba(200,155,42,.18);
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 28px 20px; }
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────────────────── */
+    .section-label {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 20px; margin-top: 28px;
+    }
+
+    .section-label::after {
+      content: ""; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* ── FORM FIELDS ──────────────────────────────────────── */
+    .field { margin-bottom: 18px; }
+
+    .field label {
+      display: block;
+      font-size: 13px; font-weight: 600;
+      color: var(--navy); margin-bottom: 6px;
+    }
+
+    .field label .req { color: var(--error); margin-left: 2px; }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--navy);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+      appearance: none;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(26,74,122,.12);
+    }
+
+    .field input.error,
+    .field select.error { border-color: var(--error); }
+
+    .field textarea { resize: vertical; min-height: 88px; }
+
+    .field-hint {
+      font-size: 11px; color: var(--gray); margin-top: 4px;
+    }
+
+    .field-error {
+      font-size: 12px; color: var(--error); margin-top: 4px; display: none;
+    }
+
+    /* Amount field with prefix */
+    .amount-wrap { position: relative; }
+
+    .amount-prefix {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 52px;
+      display: flex; align-items: center; justify-content: center;
+      background: #e2d9c5; border-radius: 10px 0 0 10px;
+      border-right: 1.5px solid var(--border);
+      font-weight: 700; font-size: 13px; color: var(--blue);
+      pointer-events: none;
+    }
+
+    .amount-wrap input { padding-left: 64px; }
+
+    /* Row layout */
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 420px) { .row { grid-template-columns: 1fr; } }
+
+    /* Checkbox */
+    .checkbox-field {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: #eef4ff;
+      border: 1.5px solid #bfd4f7;
+      border-radius: 10px;
+      padding: 14px 16px;
+      cursor: pointer;
+      margin-bottom: 18px;
+    }
+
+    .checkbox-field input[type="checkbox"] {
+      width: 18px; height: 18px;
+      flex-shrink: 0; margin-top: 1px;
+      accent-color: var(--blue);
+      cursor: pointer;
+    }
+
+    .checkbox-field .cb-text strong {
+      display: block; font-size: 14px;
+      font-weight: 600; color: var(--navy);
+    }
+
+    .checkbox-field .cb-text span {
+      font-size: 12px; color: var(--gray);
+    }
+
+    /* ── SUBMIT BUTTON ────────────────────────────────────── */
+    .submit-btn {
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 20px rgba(15,39,68,.35);
+    }
+
+    .submit-btn::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(200,155,42,.25) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(15,39,68,.45); }
+    .submit-btn:hover::before { opacity: 1; }
+    .submit-btn:active { transform: translateY(0); }
+    .submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    .btn-content { display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+    /* ── SUCCESS STATE ────────────────────────────────────── */
+    .success-panel {
+      display: none;
+      text-align: center;
+      padding: 16px 0 8px;
+    }
+
+    .success-icon {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 0 10px rgba(22,163,74,.1);
+      animation: pop .4s cubic-bezier(.18,1.28,.5,1);
+    }
+
+    @keyframes pop {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    .success-panel h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; color: var(--green);
+      margin-bottom: 8px;
+    }
+
+    .success-panel p { color: var(--gray); font-size: 14px; line-height: 1.6; }
+
+    .pledge-ref {
+      display: inline-block;
+      background: #f0fdf4; border: 1.5px solid #86efac;
+      color: var(--green); font-size: 13px; font-weight: 700;
+      padding: 6px 18px; border-radius: 40px;
+      margin: 14px auto;
+      letter-spacing: .04em;
+    }
+
+    .another-btn {
+      margin-top: 20px;
+      background: none; border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 10px 24px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 600;
+      color: var(--navy); cursor: pointer;
+      transition: background .15s;
+    }
+
+    .another-btn:hover { background: #e2d9c5; }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,.38);
+      padding-bottom: 32px;
+      position: relative; z-index: 1;
+    }
+
+    /* ── SPINNER ──────────────────────────────────────────── */
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── QUICK AMOUNTS ────────────────────────────────────── */
+    .quick-amounts {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .qa-btn {
+      padding: 6px 14px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 30px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 600;
+      color: var(--navy);
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .qa-btn:hover,
+    .qa-btn.active {
+      background: var(--navy); color: var(--white); border-color: var(--navy);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <header class="hero">
+    <div class="cross-icon">✝</div><br/>
+    <span class="hero-tag">Youth Harvest 2026</span>
+    <h1>Make Your <span>Pledge</span></h1>
+    <p>Your generosity builds the future of our youth ministry. Every pledge, big or small, makes a difference.</p>
+  </header>
+
+  <!-- ── FORM CARD ─────────────────────────────────────────── -->
+  <div class="card-wrap">
+    <div class="card">
+
+      <!-- SUCCESS STATE -->
+      <div class="success-panel" id="successPanel">
+        <div class="success-icon">🙏</div>
+        <h2>God Bless You!</h2>
+        <p>Your pledge has been recorded. You will receive a confirmation shortly.</p>
+        <div class="pledge-ref" id="pledgeRef">PLG-XXXXXXXX</div>
+        <p style="font-size:12px;color:#94a3b8;">Keep this reference for your records.</p>
+        <br/>
+        <button class="another-btn" onclick="resetForm()">Make Another Pledge</button>
+      </div>
+
+      <!-- FORM -->
+      <form id="pledgeForm" novalidate>
+
+        <!-- Personal Info -->
+        <div class="section-label">Personal Information</div>
+
+        <div class="row">
+          <div class="field">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" id="name" placeholder="e.g. Kofi Mensah" autocomplete="name" />
+            <div class="field-error" id="nameErr">Please enter your full name.</div>
+          </div>
+          <div class="field">
+            <label>Phone Number <span class="req">*</span></label>
+            <input type="tel" id="phone" placeholder="024 000 0000" autocomplete="tel" />
+            <div class="field-error" id="phoneErr">Enter a valid phone number.</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Email Address <span style="font-weight:400;color:var(--gray)">(optional)</span></label>
+          <input type="email" id="email" placeholder="you@example.com" autocomplete="email" />
+          <div class="field-hint">A confirmation will be sent here if provided.</div>
+        </div>
+
+        <div class="field">
+          <label>Society / Group <span class="req">*</span></label>
+          <select id="society">
+            <option value="" disabled selected>— Select your society or group —</option>
+            <optgroup label="Youth Groups">
+              <option>Catholic Youth Organisation (CYO)</option>
+              <option>Youth for Christ (YFC)</option>
+              <option>Junior Catholic Youth Organisation (JCYO)</option>
+            </optgroup>
+            <optgroup label="Societies">
+              <option>Knights of St. John International (KSJI)</option>
+              <option>Catholic Women Association (CWA)</option>
+              <option>Legion of Mary</option>
+              <option>St. Vincent de Paul Society</option>
+              <option>Charismatic Renewal</option>
+              <option>Choir / Music Ministry</option>
+            </optgroup>
+            <optgroup label="Other">
+              <option>General Parishioner</option>
+              <option>Other / Visitor</option>
+            </optgroup>
+          </select>
+          <div class="field-error" id="societyErr">Please select a society.</div>
+        </div>
+
+        <!-- Pledge Amount -->
+        <div class="section-label">Pledge Amount</div>
+
+        <div class="quick-amounts" id="quickAmounts">
+          <button type="button" class="qa-btn" onclick="setAmount(50)">GHS 50</button>
+          <button type="button" class="qa-btn" onclick="setAmount(100)">GHS 100</button>
+          <button type="button" class="qa-btn" onclick="setAmount(200)">GHS 200</button>
+          <button type="button" class="qa-btn" onclick="setAmount(500)">GHS 500</button>
+          <button type="button" class="qa-btn" onclick="setAmount(1000)">GHS 1,000</button>
+        </div>
+
+        <div class="field">
+          <label>Custom Amount (GHS) <span class="req">*</span></label>
+          <div class="amount-wrap">
+            <div class="amount-prefix">GHS</div>
+            <input type="number" id="amount" placeholder="Enter amount" min="1" step="0.01" />
+          </div>
+          <div class="field-error" id="amountErr">Please enter a valid amount.</div>
+        </div>
+
+        <label class="checkbox-field">
+          <input type="checkbox" id="recurring" />
+          <div class="cb-text">
+            <strong>Recurring Pledge</strong>
+            <span>I would like to pledge this amount monthly / regularly</span>
+          </div>
+        </label>
+
+        <!-- Optional Message -->
+        <div class="section-label">Prayer Intention <span style="font-weight:400;font-size:11px;letter-spacing:0;text-transform:none;color:var(--gray)">(optional)</span></div>
+
+        <div class="field">
+          <textarea id="message" placeholder="Share a prayer request or message of encouragement…"></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <div class="btn-content">
+            <span id="btnText">🌾 Submit My Pledge</span>
+            <div class="spinner" id="spinner"></div>
+          </div>
+        </button>
+
+      </form>
+    </div>
+
+    <div class="footer" style="margin-top:24px;">
+      Good Shepherd Catholic Church, Tema Community 2 &nbsp;·&nbsp; Youth Harvest 2026
+    </div>
+  </div>
+
+  <script>
+    // ── CONFIGURATION ────────────────────────────────────────
+    // 🔴 REPLACE THIS WITH YOUR DEPLOYED WEB APP URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+
+    // ── QUICK AMOUNT ─────────────────────────────────────────
+    function setAmount(val) {
+      document.getElementById('amount').value = val;
+      document.querySelectorAll('.qa-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    // Clear active when typing
+    document.getElementById('amount').addEventListener('input', () => {
+      document.querySelectorAll('.qa-btn').forEach(b => b.classList.remove('active'));
+    });
+
+    // ── VALIDATION ───────────────────────────────────────────
+    function showErr(id, msg) {
+      const el = document.getElementById(id);
+      if (el) { el.style.display = 'block'; el.textContent = msg; }
+    }
+    function clearErr(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    }
+    function setInputError(id, hasError) {
+      const inp = document.getElementById(id);
+      if (inp) inp.classList.toggle('error', hasError);
+    }
+
+    function validate() {
+      let ok = true;
+
+      const name = document.getElementById('name').value.trim();
+      if (!name) { showErr('nameErr','Please enter your full name.'); setInputError('name',true); ok=false; }
+      else { clearErr('nameErr'); setInputError('name',false); }
+
+      const phone = document.getElementById('phone').value.trim().replace(/\D/g,'');
+      if (phone.length < 9) { showErr('phoneErr','Enter a valid Ghanaian phone number.'); setInputError('phone',true); ok=false; }
+      else { clearErr('phoneErr'); setInputError('phone',false); }
+
+      const society = document.getElementById('society').value;
+      if (!society) { showErr('societyErr','Please select your society.'); setInputError('society',true); ok=false; }
+      else { clearErr('societyErr'); setInputError('society',false); }
+
+      const amount = parseFloat(document.getElementById('amount').value);
+      if (!amount || amount <= 0) { showErr('amountErr','Please enter an amount greater than 0.'); setInputError('amount',true); ok=false; }
+      else { clearErr('amountErr'); setInputError('amount',false); }
+
+      return ok;
+    }
+
+    // ── FORM SUBMIT ──────────────────────────────────────────
+    document.getElementById('pledgeForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (!validate()) return;
+
+      const btn     = document.getElementById('submitBtn');
+      const spinner = document.getElementById('spinner');
+      const btnText = document.getElementById('btnText');
+
+      btn.disabled  = true;
+      spinner.style.display = 'block';
+      btnText.textContent   = 'Submitting…';
+
+      const payload = {
+        name:      document.getElementById('name').value.trim(),
+        phone:     document.getElementById('phone').value.trim(),
+        email:     document.getElementById('email').value.trim(),
+        society:   document.getElementById('society').value,
+        amount:    parseFloat(document.getElementById('amount').value),
+        recurring: document.getElementById('recurring').checked,
+        message:   document.getElementById('message').value.trim(),
+      };
+
+      try {
+        const res  = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body:   JSON.stringify(payload),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          document.getElementById('pledgeRef').textContent = data.id;
+          document.getElementById('pledgeForm').style.display  = 'none';
+          document.getElementById('successPanel').style.display = 'block';
+          // Scroll to top of card
+          document.querySelector('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          throw new Error(data.error || 'Unknown error');
+        }
+      } catch(err) {
+        alert('⚠️ Something went wrong: ' + err.message + '\n\nPlease try again or contact us.');
+        btn.disabled  = false;
+        spinner.style.display = 'none';
+        btnText.textContent   = '🌾 Submit My Pledge';
+      }
+    });
+
+    // ── RESET ────────────────────────────────────────────────
+    function resetForm() {
+      document.getElementById('pledgeForm').reset();
+      document.getElementById('pledgeForm').style.display  = '';
+      document.getElementById('successPanel').style.display = 'none';
+      document.querySelectorAll('.qa-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.field-error').forEach(e => e.style.display = 'none');
+      document.querySelectorAll('input,select,textarea').forEach(e => e.classList.remove('error'));
+      const btn     = document.getElementById('submitBtn');
+      const spinner = document.getElementById('spinner');
+      const btnText = document.getElementById('btnText');
+      btn.disabled  = false;
+      spinner.style.display = 'none';
+      btnText.textContent   = '🌾 Submit My Pledge';
+    }
+  </script>
+</body>
+</html>
