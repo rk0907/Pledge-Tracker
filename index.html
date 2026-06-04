@@ -497,6 +497,35 @@
       transform: scale(0.98);
     }
 
+    .pay-btn {
+      display: block;
+      width: 100%;
+      margin-top: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-lt));
+      border: none;
+      border-radius: 10px;
+      padding: 14px 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 15px rgba(196, 30, 58, 0.25);
+      text-decoration: none;
+    }
+
+    .pay-btn:hover {
+      background: linear-gradient(135deg, var(--accent-dark), #a01830);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(196, 30, 58, 0.35);
+    }
+
+    .pay-btn:active {
+      transform: scale(0.98);
+    }
+
     /* ── FOOTER ───────────────────────────────────────────── */
     .footer {
       text-align: center;
@@ -586,6 +615,9 @@
         <p style="font-size:13px;color:var(--gray-500);margin-top:16px;">A confirmation will be sent shortly. Keep your reference number for your records.</p>
         <br/>
         <button class="another-btn" onclick="resetForm()">Make Another Pledge</button>
+        <a href="https://youth-harvest-kohl.vercel.app/" class="pay-btn">
+          <i class="fas fa-credit-card" style="margin-right: 8px;"></i>Proceed to Payment
+        </a>
       </div>
 
       <!-- FORM -->
